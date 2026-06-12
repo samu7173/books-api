@@ -1,0 +1,118 @@
+openapi: 3.0.3
+
+info:
+  title: Books API
+  description: API for searching and retrieving books from Gutendex.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8081
+
+tags:
+  - name: Books
+    description: Book operations
+
+paths:
+
+  /books:
+    get:
+      tags:
+        - Books
+      summary: Search books by text
+      description: Search books using a text query.
+      operationId: searchBooks
+
+      parameters:
+        - name: query
+          in: query
+          required: true
+          description: Text used to search books.
+          schema:
+            type: string
+            minLength: 1
+
+      responses:
+        '200':
+          description: Books found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BookResponse'
+
+        '400':
+          description: Invalid request
+
+  /books/{id}:
+    get:
+      tags:
+        - Books
+      summary: Get book by id
+      description: Retrieve a book by its Gutenberg identifier.
+      operationId: getBookById
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Gutenberg book identifier.
+          schema:
+            type: integer
+            format: int64
+
+      responses:
+        '200':
+          description: Book found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookResponse'
+
+        '404':
+          description: Book not found
+
+components:
+
+  schemas:
+
+    BookResponse:
+      type: object
+      required:
+        - id
+        - title
+        - subjects
+        - authors
+
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 84
+
+        title:
+          type: string
+          example: Frankenstein
+
+        subjects:
+          type: array
+          items:
+            type: string
+          example:
+            - Horror tales
+            - Science fiction
+
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthorResponse'
+
+    AuthorResponse:
+      type: object
+      required:
+        - name
+
+      properties:
+        name:
+          type: string
+          example: Mary Wollstonecraft Shelley
