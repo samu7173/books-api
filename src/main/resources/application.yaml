@@ -3,3 +3,5 @@ spring:
     name: books-api
 server:
   port: 8081
+gutendex:
+  base-url: https://gutendex.com
