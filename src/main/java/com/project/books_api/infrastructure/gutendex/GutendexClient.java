@@ -31,15 +31,10 @@ public class GutendexClient {
 
     public GutendexSearchResponseDto searchBooks(String query) {
 
-        var entity = RestClient.create()
+        return RestClient.create()
                 .get()
                 .uri(properties.baseUrl() + "/books/?search=" + query)
                 .retrieve()
-                .toEntity(String.class);
-
-        System.out.println("STATUS: " + entity.getStatusCode());
-        System.out.println("BODY: " + entity.getBody());
-
-        return null;
+                .body(GutendexSearchResponseDto.class);
     }
 }

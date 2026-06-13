@@ -9,10 +9,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
     private final BookRepository repository;
+
+    public BookServiceImpl(BookRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public List<Book> searchBooks(String query) {

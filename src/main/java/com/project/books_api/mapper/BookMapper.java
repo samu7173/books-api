@@ -13,13 +13,15 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface BookMapper {
 
+    // Gutendex -> Domain
     Book toDomain(GutendexBookDto dto);
 
-    List<Book> toDomain(List<GutendexBookDto> dto);
+    List<Book> toDomain(List<GutendexBookDto> dtos);
 
     Author toDomain(GutendexAuthorDto dto);
 
-    BookResponse toDto(Book book);
+    // Domain -> API Response
+    BookResponse toResponse(Book book);
 
-    List<BookResponse> toDto(List<Book> books);
+    List<BookResponse> toResponse(List<Book> books);
 }
