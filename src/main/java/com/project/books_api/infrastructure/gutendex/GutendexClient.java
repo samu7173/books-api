@@ -31,8 +31,7 @@ public class GutendexClient {
 
     public GutendexSearchResponseDto searchBooks(String query) {
 
-        return RestClient.create()
-                .get()
+        return restClient.get()
                 .uri(properties.baseUrl() + "/books/?search=" + query)
                 .retrieve()
                 .body(GutendexSearchResponseDto.class);
